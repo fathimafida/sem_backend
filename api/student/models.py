@@ -26,10 +26,10 @@ class Student(models.Model):
         models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True),
     )
     adhaar_no = models.CharField(null=True, blank=True, max_length=50)
-    address = models.TextField(null=True, blank=True)
+    address = models.TextField(null=True, blank=True, default=None)
     blood_group = models.CharField(null=True, blank=True, max_length=50)
-    hobby = models.TextField(null=True, blank=True)
-    field_of_interest = models.TextField(null=True, blank=True)
+    hobby = models.TextField(null=True, blank=True, default=None)
+    field_of_interest = models.TextField(null=True, blank=True, default=None)
     father_name = models.CharField(null=True, blank=True, max_length=150)
     mother_name = models.CharField(null=True, blank=True, max_length=150)
     father_mobile = models.CharField(null=True, blank=True, max_length=50)
@@ -38,7 +38,7 @@ class Student(models.Model):
     guardian_relation = models.CharField(null=True, blank=True, max_length=150)
     guardian_mobile = models.CharField(null=True, blank=True, max_length=50)
     parent_email = models.EmailField(null=True, blank=True)
-    parent_address = models.TextField(null=True, blank=True)
+    parent_address = models.TextField(null=True, blank=True, default=None)
     gender = models.CharField(
         max_length=20, choices=Gender.choices, default=Gender.MALE
     )

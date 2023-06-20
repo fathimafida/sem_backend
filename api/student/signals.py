@@ -1,5 +1,5 @@
 from django.dispatch import receiver
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, post_delete
 from api.authentication.models import CustomUser
 
 from api.student.models import Student
@@ -57,3 +57,9 @@ def update_student_profile_completed(sender, instance: Student, **kwargs):
         instance.is_profile_completed = True
     else:
         instance.is_profile_completed = False
+
+
+@receiver(post_delete, sender=Student)
+def delete_user_with_student(sender, instance: Student, **kwargs):
+    if instance.user:
+        instance.user.delete()
