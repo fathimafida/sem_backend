@@ -1,0 +1,16 @@
+from django.template.defaultfilters import slugify
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+
+from api.authentication.models import CustomUser
+
+
+@receiver(pre_save, sender=CustomUser)
+def create_custom_user(sender, instance, **kwargs):
+    if instance.id is None:
+        kusername = slugify(instance.first_name)
+        counter = 1
+        while CustomUser.objects.filter(username=kusername):
+            kusername = kusername + str(counter)
+            counter += 1
+        instance.username = kusername
