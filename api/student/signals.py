@@ -52,6 +52,7 @@ def update_student_profile_completed(sender, instance: Student, **kwargs):
             instance.guardian_mobile,
             instance.parent_email,
             instance.parent_address,
+            instance.parent_sign
         ]
     ):
         instance.is_profile_completed = True

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "api.department",
     "api.classroom",
     "api.authentication",
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +63,9 @@ ROOT_URLCONF = "sem_backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
