@@ -45,9 +45,9 @@ class StudentLoginSerializer(serializers.Serializer):
 class StudentLoginAPIView(APIView):
     serializer_class = StudentLoginSerializer
 
-    # @csrf_exempt
-    # def dispatch(self, request, *args, **kwargs):
-    #     return super().dispatch(request, *args, **kwargs)
+    @csrf_exempt
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
         serializer = self.serializer_class(
