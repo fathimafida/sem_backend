@@ -4,7 +4,7 @@ from api.classroom.models import ClassRoom
 
 from api.department.models import Department
 
-
+from jsignature.fields import JSignatureField
 class Student(models.Model):
     class Gender(models.TextChoices):
         MALE = "male"
@@ -17,6 +17,8 @@ class Student(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, blank=True)
     year_of_join = models.IntegerField()
     admission_no = models.CharField(max_length=50)
+    signature = JSignatureField(null=True,blank=True)
+    parent_signature = JSignatureField(null=True,blank=True)
     university_reg_no = models.CharField(null=True, blank=True, max_length=50)
     mobile = models.CharField(null=True, blank=True, max_length=50)
     sign = models.ImageField(upload_to="sign", null=True, blank=True)

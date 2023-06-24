@@ -47,7 +47,15 @@ INSTALLED_APPS = [
     "api.classroom",
     "api.authentication",
     "import_export",
+    'jsignature',
 ]
+
+JSIGNATURE_JQUERY = 'admin'
+JSIGNATURE_WIDTH = 200
+JSIGNATURE_HEIGHT = 200
+JSIGNATURE_DECOR_COLOR = "#FF0000" 
+
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -58,6 +66,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'api.student.middleware.RequestMiddleware', 
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
