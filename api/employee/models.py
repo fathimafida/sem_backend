@@ -3,6 +3,8 @@ from django.forms import ValidationError
 
 from api.authentication.models import CustomUser
 from api.department.models import Department
+from jsignature.fields import JSignatureField
+
 
 
 class Employee(models.Model):
@@ -18,6 +20,7 @@ class Employee(models.Model):
     staff_id = models.CharField(
         max_length=50,
     )
+    signature = JSignatureField(null=True,blank=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, blank=True)
     mobile = models.CharField(max_length=50, null=True, blank=True)
     role = models.CharField(max_length=20, choices=Roles.choices, default=Roles.STAFF)
@@ -35,7 +38,7 @@ class Employee(models.Model):
     def clean(self):
         super().clean()
         admin_staff_count = Employee.objects.filter(role=self.Roles.ADMIN_STAFF).count()
-        principal_count = Employee.objects.filter(role=self.Roles.PRINCIPAL).count()
+        principal_count = Employee.objects.filter(role=self.Roles.PRINCIPAL).exclude(pk=self.pk).count()
 
         if self.role == self.Roles.ADMIN_STAFF and admin_staff_count > 0:
             raise ValidationError("There can only be one ADMIN_STAFF role.")

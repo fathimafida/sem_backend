@@ -1,0 +1,11 @@
+first_name,last_name,email,year_of_join,admission_no,classroom,department,gender
+John,Doe,john.doe@example.com,2022,ADM001,3,1,male
+Jane,Smith,jane.smith@example.com,2021,ADM002,3,1,female
+Mike,Johnson,mike.johnson@example.com,2023,ADM003,3,1,male
+Emily,Williams,emily.williams@example.com,2021,ADM004,3,1,female
+David,Miller,david.miller@example.com,2022,ADM005,3,1,male
+Emma,Anderson,emma.anderson@example.com,2023,ADM006,3,1,female
+Daniel,Thomas,daniel.thomas@example.com,2022,ADM007,3,1,male
+Olivia,Jones,olivia.jones@example.com,2021,ADM008,3,1,female
+Michael,Brown,michael.brown@example.com,2023,ADM009,3,1,male
+Sophia,Clark,sophia.clark@example.com,2022,ADM010,3,1,female

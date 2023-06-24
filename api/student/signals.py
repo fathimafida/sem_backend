@@ -1,8 +1,11 @@
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, post_save, post_delete
 from api.authentication.models import CustomUser
+from api.employee.models import Employee
+from api.sembook.models import Sembook
 
 from api.student.models import Student
+from django.contrib.auth.models import Group
 
 
 @receiver(pre_save, sender=Student)
@@ -17,9 +20,13 @@ def create_user_for_student(sender, instance: Student, **kwargs):
             first_name=instance.first_name,
             last_name=instance.last_name,
             password=instance.admission_no,
+            is_staff=True
         )
         # Assign the created User to the Student's user field
         instance.user = user
+        group, created = Group.objects.get_or_create(name="STG")
+        
+        instance.user.groups.add(group)
 
 
 @receiver(pre_save, sender=Student)
@@ -52,9 +59,11 @@ def update_student_profile_completed(sender, instance: Student, **kwargs):
             instance.guardian_mobile,
             instance.parent_email,
             instance.parent_address,
+            instance.parent_sign
         ]
     ):
         instance.is_profile_completed = True
+        Sembook.objects.filter(student=instance).update(is_completed=True)
     else:
         instance.is_profile_completed = False
 
@@ -63,3 +72,13 @@ def update_student_profile_completed(sender, instance: Student, **kwargs):
 def delete_user_with_student(sender, instance: Student, **kwargs):
     if instance.user:
         instance.user.delete()
+
+
+@receiver(post_save, sender=Student)
+def create_sembook(sender, instance, created, **kwargs):
+    if created:
+        # Retrieve the principal with the role "principal"
+        principal = Employee.objects.filter(role=Employee.Roles.PRINCIPAL).first()
+        
+        # Create a Sembook instance for the student with the principal's signature
+        Sembook.objects.create(student=instance, principal=principal,is_completed = instance.is_profile_completed)

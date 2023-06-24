@@ -5,4 +5,7 @@ from api.classroom.models import ClassRoom
 # Register your models here.
 
 
-admin.site.register(ClassRoom)
+class ClassRoomAdmin(admin.ModelAdmin):
+    list_display = ('current_semester','name','id')
+
+admin.site.register(ClassRoom,ClassRoomAdmin)

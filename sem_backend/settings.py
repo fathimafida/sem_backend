@@ -39,30 +39,46 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "corsheaders",
     "api.student",
     "api.sembook",
     "api.employee",
     "api.department",
     "api.classroom",
     "api.authentication",
+    "import_export",
+    'jsignature',
 ]
+
+JSIGNATURE_JQUERY = 'admin'
+JSIGNATURE_WIDTH = 200
+JSIGNATURE_HEIGHT = 200
+JSIGNATURE_DECOR_COLOR = "#FF0000" 
+
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'api.student.middleware.RequestMiddleware', 
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = "sem_backend.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

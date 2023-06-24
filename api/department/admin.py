@@ -4,4 +4,8 @@ from api.department.models import Department
 
 # Register your models here.
 
-admin.site.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ('name','id',)
+    
+
+admin.site.register(Department,DepartmentAdmin)

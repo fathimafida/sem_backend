@@ -1,6 +1,8 @@
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, post_save, post_delete
 from api.authentication.models import CustomUser
+from django.contrib.auth.models import Group
+
 
 from api.employee.models import Employee
 
@@ -17,9 +19,18 @@ def create_user_for_employee(sender, instance: Employee, **kwargs):
             first_name=instance.first_name,
             last_name=instance.last_name,
             password=instance.staff_id,
+            is_staff=True,  
         )
         # Assign the created User to the Student's user field
         instance.user = user
+        if instance.role == Employee.Roles.PRINCIPAL:
+            group, created = Group.objects.get_or_create(name="PG")
+        if instance.role == Employee.Roles.TEACHER:
+            group, created = Group.objects.get_or_create(name="TG")
+        if instance.role == Employee.Roles.STAFF:
+            group, created = Group.objects.get_or_create(name="SG")
+        
+        instance.user.groups.add(group)
 
 
 @receiver(pre_save, sender=Employee)
